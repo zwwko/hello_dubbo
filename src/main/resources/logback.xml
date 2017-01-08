@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- 控制台输出 -->
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 按照每天生成日志文件 -->
+	<appender name="dailyfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				crab_model.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+			<totalSizeCap>10GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger - %msg%n</Pattern>
+		</encoder>
+	</appender>
+
+	<!-- 默认logger -->
+	<root>
+		<level value="ERROR" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="dailyfile" />
+	</root>
+	
+	<logger name="uyun.crab" level="INFO" />
+	<logger name="com.alibaba.dubbo" level="INFO" />
+	<logger name="uyun.crab.common.message" level="ERROR" />
+	
+</configuration>
